@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,29 +10,198 @@
     <link rel="stylesheet" href="style.css">
     <!-- Box Icons -->
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 150px;
+        }
+
+        .navbar {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar li a:hover {
+            text-decoration: underline;
+        }
+
+        .header-icon i {
+            color: white;
+            margin-left: 20px;
+            font-size: 24px;
+        }
+
+        .header-icon i:hover {
+            cursor: pointer;
+        }
+
+        .search-box input {
+            padding: 5px 10px;
+            margin-top: 10px;
+            width: 200px;
+        }
+
+        /* Data Management Section */
+        .data-management {
+            padding: 40px;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .heading h2 {
+            font-size: 2rem;
+            color: #000;
+        }
+
+        .add-product-container,
+        .edit-product-container,
+        .delete-product-container {
+            background-color: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .add-product-container h3,
+        .edit-product-container h3,
+        .delete-product-container h3 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #444;
+        }
+
+        /* Product List Section */
+        .product-list-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-list-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .product-list-container table th,
+        .product-list-container table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .product-list-container table th {
+            background-color: #f0f0f0;
+        }
+
+        .product-list-container table img {
+            width: 50px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .footer .social a {
+            margin: 0 10px;
+            color: white;
+        }
+
+        .footer .social a:hover {
+            color: #f4f4f4;
+        }
+
+        /* Copyright */
+        .copyright {
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
     <header>
         <a href="#" class="logo">
-            <img src="img/logo.png" alt="">
+            <img src="img/logo.png" alt="Boat Logo">
         </a>
-        <!-- Menu-Icon -->
-        <i class='bx bx-menu' id="menu-icon"></i>
-        <!-- Links -->
         <ul class="navbar">
             <li><a href="index.html">Home</a></li>
             <li><a href="AboutUs.html">About Us</a></li>
             <li><a href="product.html">Products</a></li>
             <li><a href="customers.html">Customers</a></li>
-            <li><a href="Jobs.html">Jobs</a></li>
         </ul>
-        <!-- Icon -->
         <div class="header-icon">
             <i class='bx bx-cart-alt'></i>
             <i class='bx bx-search' id="search-icon"></i>
         </div>
-        <!-- Search Box -->
         <div class="search-box">
             <input type="search" placeholder="Search Here...">
         </div>
@@ -42,30 +210,80 @@
     <!-- Data Management Section -->
     <section class="data-management">
         <div class="heading">
-            <h2>Data Management</h2>
+            <h2>Manage Products</h2>
         </div>
-        <!-- Management Features -->
-        <div class="management-container">
-            <div class="box">
-                <h3>View Products</h3>
-                <p>Manage and review all your products.</p>
-                <a href="#">Go to Products</a>
-            </div>
-            <div class="box">
-                <h3>Manage Orders</h3>
-                <p>Manage and track customer orders.</p>
-                <a href="#">View Orders</a>
-            </div>
-            <div class="box">
-                <h3>Customer Management</h3>
-                <p>View and manage customer details.</p>
-                <a href="#">Manage Customers</a>
-            </div>
-            <div class="box">
-                <h3>Job Management</h3>
-                <p>Post and manage job openings.</p>
-                <a href="#">Manage Jobs</a>
-            </div>
+        
+        <!-- Add Product Form -->
+        <div class="add-product-container">
+            <h3>Add New Product</h3>
+            <form id="add-product-form">
+                <label for="product-name">Product Name:</label>
+                <input type="text" id="product-name" name="product-name" required>
+
+                <label for="product-description">Description:</label>
+                <textarea id="product-description" name="product-description" required></textarea>
+
+                <label for="product-price">Price:</label>
+                <input type="number" id="product-price" name="product-price" required>
+
+                <label for="product-image">Product Image URL:</label>
+                <input type="url" id="product-image" name="product-image" required>
+
+                <button type="submit">Add Product</button>
+            </form>
+        </div>
+
+        <!-- Edit Product Form -->
+        <div class="edit-product-container">
+            <h3>Edit Product</h3>
+            <form id="edit-product-form">
+                <label for="edit-product-id">Product ID:</label>
+                <input type="number" id="edit-product-id" name="edit-product-id" required>
+
+                <label for="edit-product-name">New Product Name:</label>
+                <input type="text" id="edit-product-name" name="edit-product-name">
+
+                <label for="edit-product-description">New Description:</label>
+                <textarea id="edit-product-description" name="edit-product-description"></textarea>
+
+                <label for="edit-product-price">New Price:</label>
+                <input type="number" id="edit-product-price" name="edit-product-price">
+
+                <label for="edit-product-image">New Image URL:</label>
+                <input type="url" id="edit-product-image" name="edit-product-image">
+
+                <button type="submit">Update Product</button>
+            </form>
+        </div>
+
+        <!-- Delete Product Form -->
+        <div class="delete-product-container">
+            <h3>Delete Product</h3>
+            <form id="delete-product-form">
+                <label for="delete-product-id">Product ID to Delete:</label>
+                <input type="number" id="delete-product-id" name="delete-product-id" required>
+
+                <button type="submit">Delete Product</button>
+            </form>
+        </div>
+
+        <!-- Product List (View Products) -->
+        <div class="product-list-container">
+            <h3>Product List</h3>
+            <table id="product-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Products will be listed here dynamically -->
+                </tbody>
+            </table>
         </div>
     </section>
 
@@ -81,28 +299,6 @@
                 <a href="#"><i class='bx bxl-tiktok'></i></a>
             </div>
         </div>
-        <div class="footer-box">
-            <h3>Support</h3>
-            <li><a href="#">Product</a></li>
-            <li><a href="#">Help & Support</a></li>
-            <li><a href="#">Return Policy</a></li>
-            <li><a href="#">Terms Of Use</a></li>
-        </div>
-        <div class="footer-box">
-            <h3>View Guides</h3>
-            <li><a href="#">Features</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Blog Posts</a></li>
-            <li><a href="#">Our Branches</a></li>
-        </div>
-        <div class="footer-box">
-            <h3>Contact</h3>
-            <div class="contact">
-                <span><i class='bx bxs-map'></i>24237 Makkah, KSA</span>
-                <span><i class='bx bxs-phone'></i>+966 444 8444</span>
-                <span><i class='bx bxs-envelope'></i>Boat@shop.com</span>
-            </div>
-        </div>
     </section>
 
     <!-- Copyright -->
@@ -112,5 +308,64 @@
 
     <!-- Link to JS -->
     <script src="main.js"></script>
+
+    <script>
+        let products = [
+            { id: 1, name: "Great AMD Gaming Build", description: "Perfect for gaming", price: "$1073.64", image: "img/p1.png" },
+            { id: 2, name: "Great Intel Gaming Build", description: "Powerful Intel build", price: "$1030.81", image: "img/p2.png" }
+        ];
+
+        function renderProducts() {
+            const tableBody = document.getElementById('product-table').querySelector('tbody');
+            tableBody.innerHTML = "";
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.description}</td>
+                    <td>${product.price}</td>
+                    <td><img src="${product.image}" alt="${product.name}" width="50"></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        document.getElementById('add-product-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const newProduct = {
+                id: products.length + 1,
+                name: document.getElementById('product-name').value,
+                description: document.getElementById('product-description').value,
+                price: document.getElementById('product-price').value,
+                image: document.getElementById('product-image').value
+            };
+            products.push(newProduct);
+            renderProducts();
+            e.target.reset();
+        });
+
+        document.getElementById('edit-product-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const productId = document.getElementById('edit-product-id').value;
+            const product = products.find(p => p.id == productId);
+            if (product) {
+                product.name = document.getElementById('edit-product-name').value || product.name;
+                product.description = document.getElementById('edit-product-description').value || product.description;
+                product.price = document.getElementById('edit-product-price').value || product.price;
+                product.image = document.getElementById('edit-product-image').value || product.image;
+                renderProducts();
+            }
+        });
+
+        document.getElementById('delete-product-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const productId = document.getElementById('delete-product-id').value;
+            products = products.filter(p => p.id != productId);
+            renderProducts();
+        });
+
+        renderProducts();
+    </script>
 </body>
 </html>
