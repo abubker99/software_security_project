@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/Boat.ico" type="image/x-icon">
+    <title>Boat_jobs</title>
+    <!-- Link TO CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Box Icons -->
+    <link rel="stylesheet"
+  href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <a href="#" class="logo">
+            <img src="img/logo.png" alt="">
+        </a>
+        <!-- Menu-Icon -->
+        <i class='bx bx-menu' id="menu-icon"></i>
+        <!-- Links -->
+        <ul class="navbar">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="AboutUs.html">About Us</a></li>
+            <li><a href="product.html">products</a></li>
+            <li><a href="customers.html">customers</a></li>
+            <li><a href="Jobs.html">Jobs</a></li>
+        </ul>
+        <!-- Icon -->
+        <div class="header-icon">
+            <i class='bx bx-cart-alt' ></i>
+            <i class='bx bx-search' id="search-icon"></i>
+        </div>
+        <!-- Search Box -->
+        <div class="search-box">
+          <input type="search" name="" id="" placeholder="Search Here...">
+        </div>
+    </header><br><br><br>
+
+    <!-- Jobs -->
+    <main class="Main">
+      <div class="container">
+          <div class="apply_box">
+            <h1>
+              Job Application
+              <span class="title_small">(Boat)</span>
+            </h1>
+            <form action="">
+              <div class="form_container">
+                <div class="form_control">
+                  <label for="first_name"> First Name </label>
+                  <input
+                    id="first_name"
+                    name="first_name"
+                    placeholder="Enter First Name..."
+                    required
+                  />
+                </div>
+                <div class="form_control">
+                  <label for="last_name"> Last Name </label>
+                  <input
+                    id="last_name"
+                    name="last_name"
+                    placeholder="Enter Last Name..."
+                    required
+                  />
+                </div>
+                <div class="form_control">
+                  <label for="email"> Email </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter Email..."
+                    required
+                  />
+                </div>
+                <div class="form_control">
+                  <label for="job_role"> Job Role </label>
+                  <select id="job_role" name="job_role">
+                      <option value="">Select Job Role</option>
+                      <option value="Sales Representative">Sales Representative</option>
+                      <option value="PC Builder/Assembler">PC Builder/Assembler</option>
+                      <option value="Marketing Specialist">Marketing Specialist</option>
+                      <option value="E-commerce Specialist">E-commerce Specialist</option>
+                      <option value="Quality Assurance Technician">Quality Assurance Technician</option>
+                  </select>
+                </div>
+                <div class="textarea_control">
+                  <label for="Experience"> Experience </label>
+                  <textarea
+                    id="Experience"
+                    name="Experience"
+                    row="4"
+                    cols="50"
+                    placeholder="Enter Experience"
+                  ></textarea>
+                </div>
+                <div class="form_control">
+                  <div class="form-input"><!--Gender selection-->
+                      <label for="Gender">Gender:</label>
+                      <label for="male">Male</label>
+                      <input type="radio" id="male" name="Gender" value="Male">
+                      <label for="female">Female</label>
+                      <input type="radio" id="female" name="Gender" value="Female">
+                  </div>
+                </div>
+                <div class="form_control">
+                  <label for="expectedSalary"> Your expected salary <b>SAR</b></label>
+                  <input
+                    type="number"
+                    id="expectedSalary"
+                    name="expectedSalary"
+                    placeholder="Enter Your expected salary..."
+                  />
+                </div>
+                <div class="form_control">
+                  <label for="DOB">Date Of Birth:</label>
+                  <input type="date" id="DOB" name="DOB" value="2004-01-01">
+                </div>
+                <div class="form_control">
+                  <label for="upload"> Upload Your CV </label>
+                  <input type="file" id="upload" name="upload" />
+                </div>
+              </div>
+              <div class="button_container">
+                <button type="submit">Apply Now</button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </main>
+
+    <section class="footer">
+        <div class="footer-box">
+            <h2>The Boat Shop</h2>
+            <p>The company and its members believe that cooperation is the path to success.</p>
+            <div class="social">
+                <a href="#"><i class='bx bxl-facebook' ></i></a>
+                <a href="#"><i class='bx bxl-twitter' ></i></a>
+                <a href="#"><i class='bx bxl-instagram' ></i></a>
+                <a href="#"><i class='bx bxl-tiktok' ></i></a>
+            </div>
+        </div>
+        <div class="footer-box">
+            <h3>Support</h3>
+            <li><a href="#">Product</a></li>
+            <li><a href="#">Help & Support</a></li>
+            <li><a href="#">Return Policy</a></li>
+            <li><a href="#">Terms Of Use</a></li>
+            <li><a href="#">Product</a></li>
+        </div>
+        <div class="footer-box">
+            <h3>View Guides</h3>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Blog Posts</a></li>
+            <li><a href="#">Our Branches</a></li>
+        </div>
+        <div class="footer-box">
+            <h3>Contact</h3>
+            <div class="contact">
+                <span><i class='bx bxs-map' ></i>24237 Makkah, KSA</span>
+                <span><i class='bx bxs-phone' ></i>+966 444 8444</span>
+                <span><i class='bx bxs-envelope' ></i>Boat@shop.com</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Copyright -->
+    <div class="copyright">
+        <p>&#169; BoatTeam All Right Reserved</p>
+    </div>
+
+
+    <!-- Link To JS -->
+    <script src="main.js"></script>
+</body>
+</html>
