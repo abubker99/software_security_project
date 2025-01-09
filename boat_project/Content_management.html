@@ -310,11 +310,12 @@
     <script src="main.js"></script>
 
     <script>
-        let products = [
+        let products = JSON.parse(localStorage.getItem('products')) || [
             { id: 1, name: "Great AMD Gaming Build", description: "Perfect for gaming", price: "$1073.64", image: "img/p1.png" },
             { id: 2, name: "Great Intel Gaming Build", description: "Powerful Intel build", price: "$1030.81", image: "img/p2.png" }
         ];
-
+    
+        // Function to render products in the management table
         function renderProducts() {
             const tableBody = document.getElementById('product-table').querySelector('tbody');
             tableBody.innerHTML = "";
@@ -330,7 +331,8 @@
                 tableBody.appendChild(row);
             });
         }
-
+    
+        // Add Product
         document.getElementById('add-product-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const newProduct = {
@@ -341,10 +343,12 @@
                 image: document.getElementById('product-image').value
             };
             products.push(newProduct);
+            localStorage.setItem('products', JSON.stringify(products)); // Save to localStorage
             renderProducts();
             e.target.reset();
         });
-
+    
+        // Edit Product
         document.getElementById('edit-product-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const productId = document.getElementById('edit-product-id').value;
@@ -354,18 +358,23 @@
                 product.description = document.getElementById('edit-product-description').value || product.description;
                 product.price = document.getElementById('edit-product-price').value || product.price;
                 product.image = document.getElementById('edit-product-image').value || product.image;
+                localStorage.setItem('products', JSON.stringify(products)); // Save to localStorage
                 renderProducts();
             }
         });
-
+    
+        // Delete Product
         document.getElementById('delete-product-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const productId = document.getElementById('delete-product-id').value;
             products = products.filter(p => p.id != productId);
+            localStorage.setItem('products', JSON.stringify(products)); // Save to localStorage
             renderProducts();
         });
-
+    
+        // Initial render of products in the table
         renderProducts();
     </script>
+    
 </body>
 </html>
