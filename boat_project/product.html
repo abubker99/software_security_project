@@ -97,35 +97,36 @@
 
     <!-- Script to dynamically populate products -->
     <script>
-        // Retrieve product data from localStorage
-        let products = JSON.parse(localStorage.getItem('products')) || [
-            { id: 1, name: "Great AMD Gaming Build", description: "Perfect for gaming", price: "$1073.64", image: "img/p1.png" },
-            { id: 2, name: "Great Intel Gaming Build", description: "Powerful Intel build", price: "$1030.81", image: "img/p2.png" }
-        ];
-    
-        // Function to render products dynamically
-        function renderProducts() {
-            const productsContainer = document.getElementById('products-container');
-            productsContainer.innerHTML = ""; // Clear the existing products
-    
-            products.forEach(product => {
-                const productBox = document.createElement('div');
-                productBox.classList.add('box');
-                productBox.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}">
-                    <h3>${product.name}</h3>
-                    <div class="content">
-                        <span>${product.price}</span>
-                        <a href="#">Add to cart</a>
-                    </div>
-                `;
-                productsContainer.appendChild(productBox);
-            });
+        // Function to fetch and display products from the database
+        function fetchProducts() {
+            fetch("db_operations.php?action=fetch")
+                .then(response => response.json())
+                .then(data => {
+                    const productsContainer = document.getElementById("products-container");
+                    productsContainer.innerHTML = ""; // Clear existing content
+                    
+                    data.forEach(product => {
+                        const productBox = document.createElement("div");
+                        productBox.classList.add("box");
+                        productBox.innerHTML = `
+                            <img src="${product.image}" alt="${product.name}">
+                            <h3>${product.name}</h3>
+                            <p>${product.description}</p>
+                            <div class="content">
+                                <span>${product.price}</span>
+                                <a href="#">Add to cart</a>
+                            </div>
+                        `;
+                        productsContainer.appendChild(productBox);
+                    });
+                })
+                .catch(error => console.error("Error fetching products:", error));
         }
     
-        // Initial render of products
-        renderProducts();
+        // Fetch and display products on page load
+        document.addEventListener("DOMContentLoaded", fetchProducts);
     </script>
+    
     
 </body>
 </html>
