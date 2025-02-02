@@ -9,22 +9,14 @@ require 'PHPMailer-master/src/PHPMailer.php';
 require 'PHPMailer-master/src/SMTP.php';
 
 // Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "boat_shop";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
-}
+require 'config.php';
 
 // Step 1: Send OTP if email is provided
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_otp'])) {
     $email = $_POST['email'];
 
     // Check if email exists
-    $stmt = $conn->prepare("SELECT id FROM acount WHERE email = ?");
+    $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -36,12 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_otp'])) {
 
     // Generate 6-digit OTP
     $otp = rand(100000, 999999);
-    $expiry = time() + (5 * 60); // OTP expires in 5 minutes
+    $expiry = date('Y-m-d H:i:s', time() + (5 * 60)); // OTP expires in 5 minutes
 
     // Store OTP in database
-    $stmt = $conn->prepare("UPDATE acount SET otp_code = ?, otp_expiry = ? WHERE email = ?");
-    $stmt->bind_param("sis", $otp, $expiry, $email);
-    $stmt->execute();
+    $stmt = $conn->prepare("UPDATE users SET otp_code = ?, otp_expires_at = ? WHERE email = ?");
+    $stmt->bind_param("sss", $otp, $expiry, $email); // Use "sss" for string binding
+    if (!$stmt->execute()) {
+        echo "Error storing OTP: " . $stmt->error;
+        exit();
+    }
 
     // Send OTP via email
     $mail = new PHPMailer(true);
@@ -81,15 +76,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['verify_otp'])) {
         exit();
     }
 
-    // Validate OTP issue : line:85 'error': Uncaught mysqli_sql_exception: Unknown column 'otp_code' in 'field list'
-    $stmt = $conn->prepare("SELECT otp_code, otp_expiry FROM acount WHERE email = ?");
+    // Validate OTP
+    $stmt = $conn->prepare("SELECT otp_code, otp_expires_at FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->bind_result($stored_otp, $otp_expiry);
     $stmt->fetch();
     $stmt->close();
 
-    if (!$stored_otp || $stored_otp != $otp || time() > $otp_expiry) {
+    if (!$stored_otp || $stored_otp != $otp || time() > strtotime($otp_expiry)) {
         echo "Invalid or expired OTP!";
         exit();
     }
@@ -98,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['verify_otp'])) {
     $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
 
     // Update password and clear OTP
-    $stmt = $conn->prepare("UPDATE acount SET password = ?, otp_code = NULL, otp_expiry = NULL WHERE email = ?");
+    $stmt = $conn->prepare("UPDATE users SET password = ?, otp_code = NULL, otp_expires_at = NULL, updated_at = CURRENT_TIMESTAMP WHERE email = ?");
     $stmt->bind_param("ss", $hashed_password, $email);
     
     if ($stmt->execute()) {
