@@ -1,14 +1,11 @@
 <?php
-$host = 'localhost'; // Hostname
-$db = 'user_auth';   // Database name
-$user = 'root';      // Database username (default for XAMPP/WAMP)
-$pass = '';          // Database password (leave empty for default)
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "boat_shop";
 
-// Create connection
-$conn = new mysqli($host, $user, $pass, $db);
-
-// Check connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Database connection failed: " . $conn->connect_error);
 }
 ?>
