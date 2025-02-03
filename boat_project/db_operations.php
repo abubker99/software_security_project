@@ -1,14 +1,6 @@
 <?php
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "boat_shop";
-
-$conn = new mysqli($host, $user, $password, $database);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// Database connection
+require 'config.php';
 
 // Handle requests
 $action = $_POST['action'] ?? $_GET['action'] ?? '';
