@@ -1,33 +1,32 @@
 <?php
+session_start();  // Start the session
 include 'config.php';  // Include database connection
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
-    // 🚨 Vulnerable: SQL Injection (Direct user input in SQL query)
-    $sql = "SELECT * FROM users WHERE email = '$email'";
-    $result = $conn->query($sql);
+    // Secure query using prepared statements
+    $stmt = $conn->prepare("SELECT username, password FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
-        // Debugging: Display user details (Leaking hashed password)
-        echo "<strong>DEBUG:</strong><br>";
-        echo "Stored Hashed Password: " . $user['password'] . "<br>";
-        echo "Entered Password: " . $password . "<br>";
-
-        // 🚨 Uses password_verify() but still allows SQL injection
         if (password_verify($password, $user['password'])) {
-            echo "<br><strong>Login successful!</strong>";
+            session_regenerate_id(true); // Secure session handling
+            $_SESSION['username'] = $user['username']; // Store username in session
+
+            header("Location: index.php"); // Redirect to homepage
+            exit();
         } else {
-            echo "<br><strong>Invalid password.</strong>";
+            echo "Invalid credentials!";
         }
-    } else {
-        echo "<strong>No user found with this email.</strong>";
     }
 }
 
-// Close connection
+$stmt->close();
 $conn->close();
 ?>

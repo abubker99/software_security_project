@@ -35,7 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sss", $username, $email, $hashed_password);
 
     if ($stmt->execute()) {
-        echo "Registration successful! <a href='login.html'>Log in</a>";
+        // Redirect to the login page after successful registration
+        header("Location: login.html");  // Adjust the URL if your login page is different
+        exit();
     } else {
         echo "An error occurred during registration: " . $conn->error;
     }

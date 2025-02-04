@@ -1,84 +1,132 @@
 <?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+session_start();
+include 'config.php'; // Database connection
 
-// Database configuration
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "boat_shop";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Database Connection Failed: " . $conn->connect_error);
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    header("Location: login.html"); // Redirect if not logged in
+    exit();
 }
 
-// Process form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = isset($_POST["username"]) ? trim($_POST["username"]) : null;
-    $email = isset($_POST["email"]) ? trim($_POST["email"]) : null;
-    $phone = isset($_POST["phone"]) ? trim($_POST["phone"]) : null;
-    $address = isset($_POST["address"]) ? trim($_POST["address"]) : null;
-    $bio = isset($_POST["bio"]) ? trim($_POST["bio"]) : null;
+$username = $_SESSION['username'];
 
-    // Handle Profile Picture Upload
-    $profile_image = "img/default-profile.png"; // Default image
-    if (!empty($_FILES["uploadProfilePicture"]["name"])) {
-        $target_dir = "uploads/";
-        if (!is_dir($target_dir)) {
-            mkdir($target_dir, 0777, true);
-        }
-        $target_file = $target_dir . basename($_FILES["uploadProfilePicture"]["name"]);
-        if (move_uploaded_file($_FILES["uploadProfilePicture"]["tmp_name"], $target_file)) {
-            $profile_image = $target_file;
-        }
-    }
+// Fetch user details from the database
+$stmt = $conn->prepare("SELECT username, email, profile_image, phone, address, bio FROM users WHERE username = ?");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    // Check if user already exists (by email)
-    $check_stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
-    $check_stmt->bind_param("s", $email);
-    $check_stmt->execute();
-    $check_stmt->store_result();
-
-    if ($check_stmt->num_rows > 0) {
-        // User exists, update the data
-        $update_stmt = $conn->prepare("
-            UPDATE users 
-            SET profile_image = ?, username = ?, phone = ?, address = ?, bio = ?, updated_at = CURRENT_TIMESTAMP
-            WHERE email = ?
-        ");
-        $update_stmt->bind_param("ssssss", $profile_image, $username, $phone, $address, $bio, $email);
-
-        if ($update_stmt->execute()) {
-            echo "<script>alert('Profile updated successfully!');</script>";
-        } else {
-            die("Error updating record: " . $update_stmt->error);
-        }
-
-        $update_stmt->close();
-    } else {
-        // User does not exist, insert new record
-        $insert_stmt = $conn->prepare("
-            INSERT INTO users (profile_image, username, email, phone, address, bio) 
-            VALUES (?, ?, ?, ?, ?, ?)
-        ");
-        $insert_stmt->bind_param("ssssss", $profile_image, $username, $email, $phone, $address, $bio);
-
-        if ($insert_stmt->execute()) {
-            echo "<script>alert('Profile created successfully!');</script>";
-        } else {
-            die("Error inserting record: " . $insert_stmt->error);
-        }
-
-        $insert_stmt->close();
-    }
-
-    $check_stmt->close();
+if ($result->num_rows === 1) {
+    $user = $result->fetch_assoc();
+} else {
+    echo "<script>alert('User not found!'); window.location.href='index.php';</script>";
+    exit();
 }
 
+$stmt->close();
 $conn->close();
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/Boat.ico" type="image/x-icon">
+    <title>User Profile - Boat</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <a href="#" class="logo">
+            <img src="img/logo.png" alt="Boat Logo">
+        </a>
+        <!-- Menu-Icon -->
+        <i class='bx bx-menu' id="menu-icon"></i>
+        <!-- Links -->
+        <ul class="navbar">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="Aboutus.php">About Us</a></li>
+            <li><a href="products.php">Products</a></li>
+            <?php if ($username === "admin"): ?>
+                <li><a href="Content_management.php">Manage Products</a></li>
+            <?php endif; ?>
+            <li><a href="logout.php">Logout</a></li>
+            <li><span>Welcome, <?php echo htmlspecialchars($username); ?>!</span></li>
+        </ul>
+        <!-- Header-Icon (Cart + Search) -->
+        <div class="header-icon">
+            <i class='bx bx-cart-alt'></i>
+            <i class='bx bx-search' id="search-icon"></i>
+        </div>
+        <!-- Search Box -->
+        <div class="search-box">
+            <input type="search" name="" id="" placeholder="Search Here...">
+        </div>
+    </header><br><br><br>
+
+    
+    <!-- User Profile Section -->
+    <main class="Main">
+        <div class="container">
+            <div class="apply_box">
+                <h1>User Profile <span class="title_small">(Boat)</span></h1>
+                <form action="update_profile.php" method="POST" enctype="multipart/form-data">
+                    <div class="profile_image">
+                        <img src="<?php echo htmlspecialchars($user['profile_image']); ?>" alt="Profile Picture" id="profilePicture">
+                        <input type="file" id="uploadProfilePicture" name="uploadProfilePicture">
+                    </div>
+                    <div class="form_container">
+                        <div class="form_control">
+                            <label for="username">Username</label>
+                            <input id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" readonly>
+                        </div>
+                        <div class="form_control">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" readonly>
+                        </div>
+                        <div class="form_control">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" value="<?php echo htmlspecialchars($user['phone']); ?>" placeholder="Enter Phone Number...">
+                        </div>
+                        <div class="form_control">
+                            <label for="address">Address</label>
+                            <input id="address" name="address" value="<?php echo htmlspecialchars($user['address']); ?>" placeholder="Enter Address...">
+                        </div>
+                        <div class="form_control">
+                            <label for="bio">Bio</label>
+                            <textarea id="bio" name="bio" rows="4" placeholder="Write a short bio..."><?php echo htmlspecialchars($user['bio']); ?></textarea>
+                        </div>
+                    </div>
+                    <div class="button_container">
+                        <button type="submit">Update Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <section class="footer">
+        <div class="footer-box">
+            <h2>The Boat Shop</h2>
+            <p>The company and its members believe that cooperation is the path to success.</p>
+        </div>
+        <div class="footer-box">
+            <h3>Contact</h3>
+            <span><i class='bx bxs-map'></i> KSA</span>
+            <span><i class='bx bxs-phone'></i> +966 111 1111</span>
+            <span><i class='bx bxs-envelope'></i> Boat@shop.com</span>
+        </div>
+    </section>
+
+    <div class="copyright">
+        <p>&#169; BoatTeam All Rights Reserved</p>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
