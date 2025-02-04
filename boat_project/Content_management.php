@@ -4,6 +4,11 @@ session_start(); // Start the session
 // Check if the user is logged in
 $isLoggedIn = isset($_SESSION['username']);
 $username = $isLoggedIn ? $_SESSION['username'] : "";
+
+if (!$isLoggedIn || (isset($_SESSION['role']) && $_SESSION['role'] !== 'admin')) {
+    // If the user is not logged in or not an admin, redirect to login page
+    header("Location: login.php");}
+    exit();
 ?>
 
 <!DOCTYPE html>
@@ -217,7 +222,7 @@ $username = $isLoggedIn ? $_SESSION['username'] : "";
                 <li><span>Welcome, <?php echo htmlspecialchars($username); ?>!</span></li>
             <?php else: ?>
                 <!-- Show Login/Sign up if not logged in -->
-                <li><a href="login.html">Login/Sign Up</a></li>
+                <li><a href="login.php">Login/Sign Up</a></li>
             <?php endif; ?>
         </ul>
 

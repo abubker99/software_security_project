@@ -4,7 +4,7 @@ include 'config.php'; // Database connection
 
 // Check if the user is logged in
 if (!isset($_SESSION['username'])) {
-    header("Location: login.html"); // Redirect if not logged in
+    header("Location: login.php"); // Redirect if not logged in
     exit();
 }
 

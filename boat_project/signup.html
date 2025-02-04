@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup Page</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet"
-  href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <style>
+        /* Error message styling */
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        .success-message {
+            color: green;
+            font-size: 14px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        /* General form input styling */
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+
+    <script>
+        // Function to check password strength
+        function checkPasswordStrength(password) {
+            const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+            return regex.test(password);
+        }
+
+        // Function to validate form inputs
+        function validateForm(event) {
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+            let formIsValid = true; // Track form validity
+
+            // Clear previous error messages
+            document.querySelectorAll('.error-message').forEach(element => element.innerHTML = "");
+
+            // Validate Username (non-empty)
+            if (username === "") {
+                document.getElementById("username-error").innerHTML = "Username is required.";
+                formIsValid = false;
+            }
+
+            // Validate Email format
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (!emailPattern.test(email)) {
+                document.getElementById("email-error").innerHTML = "Invalid email format.";
+                formIsValid = false;
+            }
+
+            // Validate Password strength
+            if (!checkPasswordStrength(password)) {
+                document.getElementById("password-error").innerHTML = "Password must be at least 8 characters long and include at least one uppercase letter, one number, and one special character.";
+                formIsValid = false;
+            }
+
+            // Validate password match
+            if (password !== confirmPassword) {
+                document.getElementById("confirm-password-error").innerHTML = "Passwords do not match.";
+                formIsValid = false;
+            }
+
+            if (!formIsValid) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+
+            return formIsValid; // Return form validity status
+        }
+    </script>
 </head>
 <body>
-    
-	<header>
+
+    <header>
         <a href="#" class="logo">
             <img src="img/logo.png" alt="">
         </a>
@@ -22,87 +100,150 @@
             <li><a href="index.php">Home</a></li>
             <li><a href="Aboutus.php">About Us</a></li>
             <li><a href="products.php">products</a></li>
-	    <li><a href="login.html">Login/Sign up</a></li>
+            <li><a href="login.php">Login/Sign up</a></li>
         </ul>
         <!-- Icon -->
         <div class="header-icon">
-            <i class='bx bx-cart-alt' ></i>
+            <i class='bx bx-cart-alt'></i>
             <i class='bx bx-search' id="search-icon"></i>
         </div>
         <!-- Search Box -->
         <div class="search-box">
-          <input type="search" name="" id="" placeholder="Search Here...">
+            <input type="search" name="" id="" placeholder="Search Here...">
         </div>
     </header>
-	
+
     <div class="login-container">
         <h1>Sign Up</h1>
-        <form action="signup.php" method="POST">
+        <form action="signup.php" method="POST" onsubmit="return validateForm(event)">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                <div id="username-error" class="error-message"></div>
             </div>
+
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <div id="email-error" class="error-message"></div>
             </div>
+
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <div id="password-error" class="error-message"></div>
             </div>
+
             <div class="form-group">
                 <label for="confirm-password">Confirm Password</label>
                 <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                <div id="confirm-password-error" class="error-message"></div>
             </div>
-            <button type="submit" class="login-btn">Sign Up</button>
-			<p>Already have an account? <a href="login.html">Login</a></p>
 
+            <button type="submit" class="login-btn">Sign Up</button>
+            <p>Already have an account? <a href="login.php">Login</a></p>
         </form>
     </div>
-    <section class="footer">
-        <div class="footer-box">
-            <h2>The Boat Shop</h2>
-            <p>The company and its members believe that cooperation is the path to success.</p>
-            <div class="social">
-                <a href="#"><i class='bx bxl-facebook' ></i></a>
-                <a href="#"><i class='bx bxl-twitter' ></i></a>
-                <a href="#"><i class='bx bxl-instagram' ></i></a>
-                <a href="#"><i class='bx bxl-tiktok' ></i></a>
-            </div>
-        </div>
-        <div class="footer-box">
-            <h3>Support</h3>
-            <li><a href="#">Product</a></li>
-            <li><a href="#">Help & Support</a></li>
-            <li><a href="#">Return Policy</a></li>
-            <li><a href="#">Terms Of Use</a></li>
-            <li><a href="#">Product</a></li>
-        </div>
-        <div class="footer-box">
-            <h3>View Guides</h3>
-            <li><a href="#">Features</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Blog Posts</a></li>
-            <li><a href="#">Our Branches</a></li>
-        </div>
-        <div class="footer-box">
-            <h3>Contact</h3>
-            <div class="contact">
-                <span><i class='bx bxs-map' ></i>KSA</span>
-                <span><i class='bx bxs-phone' ></i>+966 111 1111</span>
-                <span><i class='bx bxs-envelope' ></i>Boat@shop.com</span>
-            </div>
-        </div>
-    </section>
 
-
-    <!-- Copyright -->
-    <div class="copyright">
-        <p>&#169; BoatTeam All Right Reserved</p>
+   <!-- Footer -->
+   <section class="footer">
+    <div class="footer-box">
+        <h2>The Boat Shop</h2>
+        <p>The company and its members believe that cooperation is the path to success.</p>
+        <div class="social">
+            <a href="#"><i class='bx bxl-facebook'></i></a>
+            <a href="#"><i class='bx bxl-twitter'></i></a>
+            <a href="#"><i class='bx bxl-instagram'></i></a>
+            <a href="#"><i class='bx bxl-tiktok'></i></a>
+        </div>
     </div>
+</section>
 
+<!-- Copyright -->
+<div class="copyright">
+    <p>&#169; BoatTeam All Rights Reserved</p>
+</div>
 
-    <!-- Link To JS -->
-    <script src="main.js"></script>
+<!-- Link to JS -->
+<script src="main.js"></script>
+<style>
+    /* Ensure full-page layout */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+}
+
+/* Center main content */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+/* General container styling for login/signup */
+.container {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+}
+
+.container h1 {
+    margin-bottom: 15px;
+}
+
+/* Input fields */
+.container input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button styling */
+.container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.container button:hover {
+    background-color: #0056b3;
+}
+
+/* Center additional links */
+.additional-links {
+    margin-top: 15px;
+}
+
+/* Stick footer to the bottom */
+.footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    margin-top: auto;
+}
+
+</style>
 </body>
 </html>

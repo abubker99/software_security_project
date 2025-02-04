@@ -2,16 +2,33 @@
 // Database connection
 require 'config.php';
 
+// Function to check password strength
+function is_valid_password($password) {
+    // Check if the password contains at least 8 characters, including at least one number, one uppercase letter, and one symbol
+    return preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/', $password);
+}
+
 // Check if data is submitted via the form
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = trim($_POST["username"]);
-    $email = trim($_POST["email"]);
+    // Sanitize and validate inputs
+    $username = htmlspecialchars(trim($_POST["username"]));  // Prevent XSS attacks
+    $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);  // Sanitize email
     $password = trim($_POST["password"]);
     $confirm_password = trim($_POST["confirm-password"]);
+
+    // Validate email format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die("Invalid email format.");
+    }
 
     // Check if passwords match
     if ($password !== $confirm_password) {
         die("Error: Passwords do not match.");
+    }
+
+    // Check password strength
+    if (!is_valid_password($password)) {
+        die("Password must be at least 8 characters long and include at least one uppercase letter, one number, and one special character.");
     }
 
     // Encrypt the password
@@ -36,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
         // Redirect to the login page after successful registration
-        header("Location: login.html");  // Adjust the URL if your login page is different
+        header("Location: login.php");  // Adjust the URL if your login page is different
         exit();
     } else {
         echo "An error occurred during registration: " . $conn->error;

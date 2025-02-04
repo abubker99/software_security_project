@@ -46,7 +46,7 @@ $username = $isLoggedIn ? $_SESSION['username'] : "";
                 <li><span>Welcome, <?php echo htmlspecialchars($username); ?>!</span></li>
             <?php else: ?>
                 <!-- Show Login/Sign up if not logged in -->
-                <li><a href="login.html">Login/Sign Up</a></li>
+                <li><a href="login.php">Login/Sign Up</a></li>
             <?php endif; ?>
         </ul>
 
@@ -75,7 +75,8 @@ $username = $isLoggedIn ? $_SESSION['username'] : "";
         </div>
     </section>
 
-    <section class="footer">
+ <!-- Footer -->
+ <section class="footer">
         <div class="footer-box">
             <h2>The Boat Shop</h2>
             <p>The company and its members believe that cooperation is the path to success.</p>
@@ -86,38 +87,94 @@ $username = $isLoggedIn ? $_SESSION['username'] : "";
                 <a href="#"><i class='bx bxl-tiktok'></i></a>
             </div>
         </div>
-        <div class="footer-box">
-            <h3>Support</h3>
-            <li><a href="#">Product</a></li>
-            <li><a href="#">Help & Support</a></li>
-            <li><a href="#">Return Policy</a></li>
-            <li><a href="#">Terms Of Use</a></li>
-            <li><a href="#">Product</a></li>
-        </div>
-        <div class="footer-box">
-            <h3>View Guides</h3>
-            <li><a href="#">Features</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Blog Posts</a></li>
-            <li><a href="#">Our Branches</a></li>
-        </div>
-        <div class="footer-box">
-            <h3>Contact</h3>
-            <div class="contact">
-                <span><i class='bx bxs-map' ></i>KSA</span>
-                <span><i class='bx bxs-phone' ></i>+966 111 1111</span>
-                <span><i class='bx bxs-envelope' ></i>Boat@shop.com</span>
-            </div>
-        </div>
     </section>
 
     <!-- Copyright -->
     <div class="copyright">
-        <p>&#169; BoatTeam All Right Reserved</p>
+        <p>&#169; BoatTeam All Rights Reserved</p>
     </div>
 
-    <!-- Link To JS -->
+    <!-- Link to JS -->
     <script src="main.js"></script>
+    <style>
+        /* Ensure full-page layout */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    
+    body, html {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        font-family: Arial, sans-serif;
+    }
+    
+    /* Center main content */
+    .main-content {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    /* General container styling for login/signup */
+    .container {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        width: 350px;
+    }
+    
+    .container h1 {
+        margin-bottom: 15px;
+    }
+    
+    /* Input fields */
+    .container input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    /* Button styling */
+    .container button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        margin-top: 15px;
+        cursor: pointer;
+    }
+    
+    .container button:hover {
+        background-color: #0056b3;
+    }
+    
+    /* Center additional links */
+    .additional-links {
+        margin-top: 15px;
+    }
+    
+    /* Stick footer to the bottom */
+    .footer {
+        background: #333;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        width: 100%;
+        margin-top: auto;
+    }
+    
+    </style>
 
     <!-- Script to dynamically populate products -->
     <script>

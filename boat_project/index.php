@@ -20,6 +20,87 @@ $username = $isLoggedIn ? $_SESSION['username'] : "";
     <link rel="stylesheet"
   href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 </head>
+<style>
+    .form-group {
+            margin-bottom: 15px;
+        }
+        /* Ensure full-page layout */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+}
+
+/* Center main content */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+/* General container styling for login/signup */
+.container {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+}
+
+.container h1 {
+    margin-bottom: 15px;
+}
+
+/* Input fields */
+.container input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button styling */
+.container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.container button:hover {
+    background-color: #0056b3;
+}
+
+/* Center additional links */
+.additional-links {
+    margin-top: 15px;
+}
+
+/* Stick footer to the bottom */
+.footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    margin-top: auto;
+}
+</style>
 <body>
     <!-- Navbar -->
     <header>
@@ -46,7 +127,7 @@ $username = $isLoggedIn ? $_SESSION['username'] : "";
                 <li><span>Welcome, <?php echo htmlspecialchars($username); ?>!</span></li>
             <?php else: ?>
                 <!-- Show Login/Sign up if not logged in -->
-                <li><a href="login.html">Login/Sign Up</a></li>
+                <li><a href="login.php">Login/Sign Up</a></li>
             <?php endif; ?>
         </ul>
 
