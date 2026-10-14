@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="200" height="100">
-  <rect width="200" height="100" fill="#eee"/>
-  <image x="10" y="10"
-         width="32" height="32"
-         xlink:href="https://webhook.site/7ebc7a83-fc93-4256-a2b2-ee2c1a815987"/>
-  <text x="10" y="80">REFERENCE-TEST</text>
-</svg>
